@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hej</title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <script>
+        let point = 0;
+
+        let svar1 = prompt("Hvad er fornavnet på Harry Potters bedste ven?");
+
+        if (svar1 == "Ron") {
+            alert(`${svar1} er korrekt!`);
+            point++;
+        } else if (svar1 == "ron") {
+            alert(`${svar1} er korrekt!`);
+            point++;
+        } else {
+            alert(`${svar1} er ukorrekt ):`)
+        }
+
+        let svar2 = prompt("Hvor mange Harry Potter bøger er der skrevet?");
+
+        if (svar2 == 7) {
+            alert(`${svar2} er korrekt!`);
+            point++;
+        } else if (svar2 == "syv") {
+            alert(`${svar2} er korrekt!`);
+            point++;
+        } else {
+            alert(`${svar2} er ukorrekt ):`)
+        }
+
+        let svar3 = prompt("Hvad hedder Voldemorts slange?");
+
+        if (svar3 == "Nagini") {
+            alert(`${svar3} er korrekt!`);
+            point++;
+        } else if (svar3 == "nagini") {
+            alert(`${svar3} er korrekt!`);
+            point++;
+        } else {
+            alert(`${svar3} er ukorrekt ):`)
+        }
+
+        let svar4 = prompt("Hvilket hus er Luna Lovegood i?");
+
+        if (svar4 == "Ravenclaw") {
+            alert(`${svar4} er korrekt!`);
+            point++;
+        } else if (svar4 == "ravenclaw") {
+            alert(`${svar4} er korrekt!`);
+            point++;
+        } else {
+            alert(`${svar4} er ukorrekt ):`)
+        }
+
+        let svar5 = prompt("Hvilket år blev den første Harry Potter bog udgivet?");
+
+        if (svar5 == "1997") {
+            alert(`${svar5} er korrekt!`);
+            point++;
+        } else {
+            alert(`${svar5} er ukorrekt ):`)
+        }
+
+        let resultat = `Antal korrekte svar er ${point}`;
+        alert(resultat);
+    </script>
+</body>
+
+</html>
