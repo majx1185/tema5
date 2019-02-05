@@ -23,6 +23,11 @@
             background: red;
 
         }
+
+        .hop {
+            position: absolute;
+            top: 0;
+        }
     </style>
 </head>
 
@@ -48,17 +53,11 @@
             cirkel.addEventListener("click", stop);
 
             function flyt() {
-                let firkantStart = firkant.innerHTML
-                firkant.innerHTML = cirkel.innerHTML;
-                cirkel.innerHTML = firkantStart;
+                cirkel.classList.add("hop");
             }
 
             function stop() {
-                firkant.removeEventListener("click", flyt);
-                firkant.style.transition = "1.5s";
-                firkant.style.backgroundColor = "red";
-                cirkel.style.transition = "1.5s";
-                cirkel.style.transform = "scale(0)";
+                cirkel.classList.remove("hop");
             }
         }
     </script>
