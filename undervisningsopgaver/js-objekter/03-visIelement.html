@@ -11,7 +11,7 @@
 
 <body>
     <div id="dyr">
-        <h2>Gris</h2>
+        <h2></h2>
         <img src="" alt="">
         <p>Type: </p>
         <p>Levested: </p>
@@ -23,16 +23,18 @@
         function start() {
 
             let dyr = {
-                "navn": "gris",
+                "navn": "Gris",
                 "type": "pattedyr",
                 "billede": "http://helf-kea.dk/test/gris.png",
                 "levested": "svinefarme"
             };
-            console.log("Dyr: gris, type: pattedyr, levested: svinefarme", dyr);
 
             let tekst = document.querySelector("#dyr");
-            tekst.querySelector("p").textContent = info;
+            tekst.querySelector("h2").textContent = dyr.navn;
             tekst.querySelector("img").src = dyr.billede;
+            tekst.querySelector("p").textContent += dyr.type;
+            tekst.querySelector("p+p").textContent += dyr.levested;
+
         }
     </script>
 </body>
