@@ -11,6 +11,13 @@
             color: darkblue;
             line-height: 150%;
         }
+
+        .typo2 {
+            font-family: monospace;
+            color: darkblue;
+            line-height: 150%;
+            font-size: 4vw;
+        }
     </style>
 
 </head>
@@ -36,17 +43,29 @@
 
         function start() {
             let alleP = document.querySelectorAll("p");
+            let alleh3 = document.querySelectorAll("h3");
             alleP.forEach(p => {
                 p.addEventListener("click", () => {
                     p.classList.add("typo");
                 })
-            });
-        }
-        document.querySelector("button").addEventListener("click,"() => {
-            alleP.forEach(p => {
-                p.classList.remove("typo");
             })
-        });
+            alleh3.forEach(h3 => {
+                h3.addEventListener("click", () => {
+                    h3.classList.add("typo2");
+                })
+            })
+
+            document.querySelector("button").addEventListener("click", () => {
+                alleP.forEach(p => {
+                    p.classList.remove("typo");
+                })
+            })
+            document.querySelector("button").addEventListener("click", () => {
+                alleh3.forEach(h3 => {
+                    h3.classList.remove("typo2");
+                })
+            })
+        }
     </script>
 </body>
 
