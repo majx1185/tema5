@@ -61,8 +61,8 @@
                     dest.innerHTML += `
 <div class="person">
 <h2>${person.navn} </h2>
-<p>Github: ${person.github}</p>
-<img src = "${person.billede}">
+<p>Github: <a href="http://www.github.com/${person.github}">${person.github}</a></p>
+<div class="billede"><img src = "${person.billede}"></div>
 <p>Email: ${person.email}</p>
 <p>Alder: ${person.alder}</p>
 <p>Køn: ${person.køn}</p>
