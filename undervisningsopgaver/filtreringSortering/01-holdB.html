@@ -5,14 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>json-øvelse</title>
-</head>
-
-<body>
-
-    <div id="liste">
-
-    </div>
-
     <style>
         .person {
             height: 40vw;
@@ -36,11 +28,15 @@
             height: 20vw;
 
         }
-
     </style>
+</head>
+
+<body>
+    <div id="liste"></div>
 
     <script>
         let personer = [];
+        let filter = "b";
 
         document.addEventListener("DOMContentLoaded", start);
 
@@ -57,9 +53,10 @@
             function visPersoner() {
                 alert("Her får du en liste over personer på MMD")
                 personer.forEach(person => {
+                    if (person.hold == filter) {
 
 
-                    dest.innerHTML += `
+                        dest.innerHTML += `
 <div class="person">
 <h2>${person.navn} </h2>
 <p>Github: <a href="http://www.github.com/${person.github}">${person.github}</a></p>
@@ -69,17 +66,14 @@
 <p>Køn: ${person.køn}</p>
 <p>Hold: ${person.hold}</p>
 </div>`;
-
+                    }
 
 
                 })
             }
-
-
             getJson();
 
         }
-
     </script>
 </body>
 

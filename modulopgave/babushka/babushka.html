@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka</title>
+    <style>
+        .madret {
+            height: 20vw;
+            width: 20vw;
+            border: 1px solid black;
+            padding: 1px;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            background: #e5cdcd;
+        }
+
+        #menukort {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <nav>
+            <button>
+                Alle
+            </button>
+
+            <button>
+                Forretter
+            </button>
+
+            <button>
+                Hovedretter
+            </button>
+
+            <button>
+                Desserter
+            </button>
+
+            <button>
+                Drikkevarer
+            </button>
+
+            <button>
+                Side orders
+            </button>
+        </nav>
+
+    </header>
+
+    <div id="menukort"></div>
+
+    <script>
+        let mad = [];
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            let dest = document.querySelector("#menukort");
+
+            async function getJson() {
+                let jsonData = await
+                fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
+                mad = await jsonData.json();
+                visMad();
+            }
+
+            function visMad() {
+                mad.forEach(madret => {
+                    dest.innerHTML += `<div class="madret"><h2>${madret.navn} </h2><p>${madret.kort}</p></div>`;
+                })
+            }
+
+            getJson();
+        }
+    </script>
+</body>
+
+</html>
