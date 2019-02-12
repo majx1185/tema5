@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json-øvelse</title>
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+
+        .person {
+            height: 40vw;
+            width: 30vw;
+            border: 1px solid rgba(0, 0, 0, 0.35);
+            padding: 1px;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            background: #e2d8eb;
+            border-radius: 10%;
+            font-family: monospace;
+        }
+
+        #liste {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            text-align: center;
+        }
+
+        img {
+            width: 20vw;
+            height: 20vw;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            margin: 2vw;
+        }
+
+        .filter {
+            margin: 0 1vw;
+            font-family: monospace;
+        }
+
+        .valgt {
+            background-color: #e2d8eb;
+        }
+
+        .overskrift {
+            text-align: center;
+            font-size: 5vw;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        #popup {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            background-color: gray;
+            display: none;
+        }
+
+        #indhold {
+            background-color: mistyrose;
+            width: 90vw;
+            height: 90vh;
+            margin: auto;
+            text-align: center;
+        }
+
+        #luk {
+            text-align: right;
+            padding-right: 5vw;
+        }
+
+        #luk button {
+            font-size: 2vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="popup">
+        <div id="luk"><button>X</button></div>
+        <div id="indhold"></div>
+    </div>
+
+    <header>
+        <h1 class="overskrift">Alle</h1>
+        <nav>
+            <div class="menu">
+                <button class="filter valgt" data-hold="alle">Alle</button>
+                <button class="filter" data-hold="a">Hold a</button>
+                <button class="filter" data-hold="b">Hold b</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="liste">
+            <article class="person"></article>
+            <article class="person"></article>
+            <article class="person"></article>
+            <article class="person"></article>
+        </section>
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script>
+        let personer = [];
+        let filter = "alle";
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            let dest = document.querySelector("#liste");
+
+
+            async function getJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1OLlD_GRoz71piHvnW306omRAyHS7vtLOILQt-K0YF_c");
+                personer = await jsonData.json();
+                personer.sort((a, b) => {
+                    return a.navn.localeCompare(b.navn); //Nu sorteres det A-Z. Hvis omvendt = byt om på a og b.
+                })
+                visPersoner();
+            }
+
+            function visPersoner() {
+                dest.innerHTML = "";
+                personer.forEach(person => {
+                    if (filter == "alle" || filter == person.hold) {
+                        let template = `
+<article class="person">
+<h2>${person.navn} </h2>
+<p>Github: <a href="http://www.github.com/${person.github}">${person.github}</a></p>
+<div class="billede"><img src = "${person.billede}"></div>
+<p>Email: ${person.email}</p>
+<p>Alder: ${person.alder}</p>
+<p>Køn: ${person.køn}</p>
+<p>Hold: ${person.hold}</p>
+</article>`;
+                        dest.insertAdjacentHTML("beforeend", template);
+                        dest.lastElementChild.addEventListener("click", åbn);
+
+                        function åbn() {
+                            document.querySelector("#indhold").innerHTML = `<article><h2>${person.navn}</h2><img class="billede" src="${person.billede}" alt="${person.navn}"><p>Github: <a href="http://www.github.com/${person.github}">${person.github}</a></p><p>Hold: ${person.hold}</p><p>Alder: ${person.alder}</p><p>Køn: ${person.køn}</p></article>`;
+                            document.querySelector("#popup").style.display = "block";
+                        }
+                    }
+
+
+                })
+            } //function visPersoner slut
+            document.querySelector("#luk button").addEventListener("click", () => {
+                document.querySelector("#popup").style.display = "none";
+            })
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+
+            function filtrering() {
+                filter = this.getAttribute("data-hold");
+                document.querySelector("h1").textContent = this.textContent;
+                document.querySelectorAll(".filter").forEach(elm => {
+                    elm.classList.remove("valgt");
+                })
+                this.classList.add("valgt");
+                visPersoner();
+            }
+            getJson();
+
+        }
+    </script>
+</body>
+
+</html>

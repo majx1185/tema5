@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json-øvelse</title>
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+
+        .person {
+            height: 40vw;
+            width: 30vw;
+            border: 1px solid rgba(0, 0, 0, 0.35);
+            padding: 1px;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            background: #e2d8eb;
+            border-radius: 10%;
+            font-family: monospace;
+        }
+
+        img {
+            width: 20vw;
+            height: 20vw;
+        }
+
+        #singleview {
+            width: 100vw;
+            height: 100vh;
+            background-color: gray;
+        }
+
+        #indhold {
+            background-color: mistyrose;
+            width: 90vw;
+            height: 90vh;
+            margin: auto;
+            text-align: center;
+        }
+
+        #tilbage {
+            text-align: right;
+            padding-right: 5vw;
+        }
+
+        #tilbage button {
+            font-size: 2vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="singleview">
+        <div id="tilbage"><button>X</button></div>
+        <div id="indhold"></div>
+    </div>
+
+    <footer>
+
+    </footer>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let github = urlParams.get("github");
+        let personer = [];
+        let filter = "alle";
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log(github);
+            let dest = document.querySelector("#liste");
+
+
+            async function getJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1OLlD_GRoz71piHvnW306omRAyHS7vtLOILQt-K0YF_c");
+                personer = await jsonData.json();
+                personer.forEach(obj => {
+                    if (obj.github == github) {
+                        person = obj;
+                    }
+                })
+
+                åbn();
+            }
+
+            function åbn() {
+                document.querySelector("#indhold").innerHTML = `<article><h2>${person.navn}</h2><img class="billede" src="${person.billede}" alt="${person.navn}"><p>Github: <a href="http://www.github.com/${person.github}">${person.github}</a></p><p>Hold: ${person.hold}</p><p>Alder: ${person.alder}</p><p>Køn: ${person.køn}</p></article>`;
+            }
+            document.querySelector("#tilbage button").addEventListener("click", () => {
+                location.href = "05-kald.html"
+            })
+            getJson();
+
+        }
+    </script>
+</body>
+
+</html>
