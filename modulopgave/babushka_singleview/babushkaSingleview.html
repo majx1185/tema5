@@ -14,10 +14,12 @@
         .madret {
             height: 27vw;
             width: 20vw;
-            border: 1px solid black;
+            border: 1px solid grey;
             padding: 1px;
             margin: 10px 10px 20px 10px;
             background-color: rgba(255, 0, 0, 0.4);
+            border-radius: 7%;
+            font-family: cursive;
         }
 
         img {
@@ -25,18 +27,20 @@
         }
 
         #singleview {
-            width: 80vw;
-            height: 80vh;
-            background-color: rosybrown;
-            margin-left: 10vw;
-            margin-top: 10vw;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffeeda;
         }
 
         #indhold {
             width: 70vw;
             height: 70vh;
             margin: auto;
+            padding: 4vw 4vw 0 4vw;
             text-align: center;
+            font-family: cursive;
+            background-color: #f8cd6b;
+            font-size: 1.5vw;
         }
 
         #tilbage {
@@ -47,6 +51,7 @@
         #tilbage button {
             font-size: 2vw;
         }
+
     </style>
 </head>
 
@@ -84,13 +89,14 @@
             }
 
             function åbn() {
-                document.querySelector("#indhold").innerHTML = `<article><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><p>${madret.lang}</p><h3>${madret.pris}kr</h3></article>`;
+                document.querySelector("#indhold").innerHTML = `<article><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><h3>Oprindelse: ${madret.oprindelse}</h3><p>${madret.lang}</p><h3>${madret.pris}kr</h3></article>`;
             }
             document.querySelector("#tilbage button").addEventListener("click", () => {
-                location.href = "babushka-nyside.html"
+                location.href = "index.html"
             })
             getJson();
         }
+
     </script>
 </body>
 

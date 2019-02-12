@@ -7,7 +7,7 @@
     <title>Bistro Babushka</title>
     <style>
         body {
-            background-color: lightgray;
+            background-color: #ffeeda;
             margin: 0;
         }
 
@@ -17,6 +17,7 @@
             font-size: 9vw;
             text-align: center;
             padding-top: 6vw;
+            padding-left: 4vw;
             color: red;
             font-family: cursive;
         }
@@ -27,12 +28,14 @@
         }
 
         .madret {
-            height: 27vw;
+            height: 30vw;
             width: 20vw;
-            border: 1px solid black;
+            border: 1px solid grey;
             padding: 1px;
             margin: 10px 10px 20px 10px;
-            background-color: rgba(255, 0, 0, 0.4);
+            background-color: #f8cd6b;
+            border-radius: 7%;
+            font-family: cursive;
         }
 
         #menukort {
@@ -49,6 +52,8 @@
 
         .filter {
             margin: 0 1vw;
+            font-family: cursive;
+            font-size: 1.5vw;
         }
 
         .valgt {
@@ -60,6 +65,7 @@
             font-size: 4vw;
             font-weight: 600;
             font-family: cursive;
+            color: #6d360f;
         }
 
         img {
@@ -74,13 +80,11 @@
         }
 
         #popup {
-            width: 80vw;
-            height: 80vh;
+            width: 100vw;
+            height: 100vh;
             position: fixed;
-            background-color: rosybrown;
             display: none;
-            margin-left: 10vw;
-            margin-top: 10vw;
+            background-color: rgba(224, 224, 224, 0.50);
             z-index: 1;
         }
 
@@ -88,7 +92,12 @@
             width: 70vw;
             height: 70vh;
             margin: auto;
+            padding: 4vw 4vw 0 4vw;
             text-align: center;
+            font-family: cursive;
+            background-color: #f8cd6b;
+            border-radius: 2%;
+            font-size: 1.5vw;
         }
 
         #luk {
@@ -98,6 +107,8 @@
 
         #luk button {
             font-size: 2vw;
+            margin-right: 14vw;
+            margin-top: 3vw;
         }
     </style>
 </head>
@@ -178,7 +189,7 @@
                         dest.lastElementChild.addEventListener("click", åbn);
 
                         function åbn() {
-                            document.querySelector("#indhold").innerHTML = `<article><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><p>${madret.lang}</p><h3>${madret.pris}kr</h3></article>`;
+                            document.querySelector("#indhold").innerHTML = `<article><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><h3>Oprindelse: ${madret.oprindelse}</h3><p>${madret.lang}</p><h3>${madret.pris}kr</h3></article>`;
                             document.querySelector("#popup").style.display = "block";
                         }
                     }
