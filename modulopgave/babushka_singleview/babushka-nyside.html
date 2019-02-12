@@ -18,6 +18,7 @@
             text-align: center;
             padding-top: 6vw;
             color: red;
+            font-family: cursive;
         }
 
         main {
@@ -56,22 +57,30 @@
 
         .overskrift {
             text-align: center;
-            font-size: 5vw;
+            font-size: 4vw;
             font-weight: 600;
+            font-family: cursive;
         }
 
         img {
             width: 18vw;
         }
+
+        .dukke img {
+            position: absolute;
+            top: 2vw;
+            left: 3vw;
+            width: 13vw;
+        }
     </style>
 </head>
 
 <body>
-
     <header>
 
         <splash>
             <div class="orangebox">Bistro Babushka</div>
+            <div class="dukke"><img src="babushkadukke.jpg" alt="dukke"></div>
         </splash>
 
         <h1 class="overskrift">Alle</h1>
@@ -108,6 +117,10 @@
         <div id="menukort"></div>
     </main>
 
+    <footer>
+
+    </footer>
+
     <script>
         let mad = [];
         let filter = "alle";
@@ -118,8 +131,7 @@
             let dest = document.querySelector("#menukort");
 
             async function getJson() {
-                let jsonData = await
-                fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
                 mad = await jsonData.json();
                 visMad();
             }
@@ -128,7 +140,12 @@
                 dest.innerHTML = "";
                 mad.forEach(madret => {
                     if (filter == "alle" || filter == madret.kategori) {
-                        dest.innerHTML += `<div class="madret"><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><p>${madret.kort}</p><h3>${madret.pris}kr</h3></div>`;
+                        let template = `<article class="madret"><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><p>${madret.kort}</p><h3>${madret.pris}kr</h3></article>`;
+
+                        dest.insertAdjacentHTML("beforeend", template);
+                        dest.lastElementChild.addEventListener("click", () => {
+                            location.href = "babushkaSingleview.html?id=" + madret.id;
+                        });
                     }
                 })
             } //function visMad slut

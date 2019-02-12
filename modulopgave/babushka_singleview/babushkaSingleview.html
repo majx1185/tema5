@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka</title>
+    <style>
+        body {
+            background-color: lightgray;
+            margin: 0;
+        }
+
+        .madret {
+            height: 27vw;
+            width: 20vw;
+            border: 1px solid black;
+            padding: 1px;
+            margin: 10px 10px 20px 10px;
+            background-color: rgba(255, 0, 0, 0.4);
+        }
+
+        img {
+            width: 18vw;
+        }
+
+        #singleview {
+            width: 80vw;
+            height: 80vh;
+            background-color: rosybrown;
+            margin-left: 10vw;
+            margin-top: 10vw;
+        }
+
+        #indhold {
+            width: 70vw;
+            height: 70vh;
+            margin: auto;
+            text-align: center;
+        }
+
+        #tilbage {
+            text-align: right;
+            padding: 1vw;
+        }
+
+        #tilbage button {
+            font-size: 2vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="singleview">
+        <div id="tilbage"><button>X</button></div>
+        <div id="indhold"></div>
+    </div>
+
+    <footer>
+
+    </footer>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let id = urlParams.get("id");
+        let mad = [];
+        let filter = "alle";
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log(id);
+            let dest = document.querySelector("#menukort");
+
+            async function getJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
+                mad = await jsonData.json();
+                mad.forEach(obj => {
+                    if (obj.id == id) {
+                        madret = obj;
+                    }
+                })
+                åbn();
+            }
+
+            function åbn() {
+                document.querySelector("#indhold").innerHTML = `<article><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><p>${madret.lang}</p><h3>${madret.pris}kr</h3></article>`;
+            }
+            document.querySelector("#tilbage button").addEventListener("click", () => {
+                location.href = "babushka-nyside.html"
+            })
+            getJson();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka</title>
+    <style>
+        body {
+            background-color: lightgray;
+            margin: 0;
+        }
+
+        .orangebox {
+            background-color: orange;
+            height: 20vw;
+            font-size: 9vw;
+            text-align: center;
+            padding-top: 6vw;
+            color: red;
+            font-family: cursive;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+        }
+
+        .madret {
+            height: 27vw;
+            width: 20vw;
+            border: 1px solid black;
+            padding: 1px;
+            margin: 10px 10px 20px 10px;
+            background-color: rgba(255, 0, 0, 0.4);
+        }
+
+        #menukort {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            margin: 2vw;
+        }
+
+        .filter {
+            margin: 0 1vw;
+        }
+
+        .valgt {
+            background-color: red;
+        }
+
+        .overskrift {
+            text-align: center;
+            font-size: 4vw;
+            font-weight: 600;
+            font-family: cursive;
+        }
+
+        img {
+            width: 18vw;
+        }
+
+        .dukke img {
+            position: absolute;
+            top: 2vw;
+            left: 3vw;
+            width: 13vw;
+        }
+
+        #popup {
+            width: 80vw;
+            height: 80vh;
+            position: fixed;
+            background-color: rosybrown;
+            display: none;
+            margin-left: 10vw;
+            margin-top: 10vw;
+            z-index: 1;
+        }
+
+        #indhold {
+            width: 70vw;
+            height: 70vh;
+            margin: auto;
+            text-align: center;
+        }
+
+        #luk {
+            text-align: right;
+            padding: 1vw;
+        }
+
+        #luk button {
+            font-size: 2vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="popup">
+        <div id="luk"><button>X</button></div>
+        <div id="indhold"></div>
+    </div>
+
+    <header>
+
+        <splash>
+            <div class="orangebox">Bistro Babushka</div>
+            <div class="dukke"><img src="babushkadukke.jpg" alt="dukke"></div>
+        </splash>
+
+        <h1 class="overskrift">Alle</h1>
+
+        <nav>
+            <button class="filter valgt" data-kategori="alle">
+                Alle
+            </button>
+
+            <button class="filter" data-kategori="forretter">
+                Forretter
+            </button>
+
+            <button class="filter" data-kategori="hovedretter">
+                Hovedretter
+            </button>
+
+            <button class="filter" data-kategori="desserter">
+                Desserter
+            </button>
+
+            <button class="filter" data-kategori="drikkevarer">
+                Drikkevarer
+            </button>
+
+            <button class="filter" data-kategori="sideorders">
+                Side orders
+            </button>
+        </nav>
+
+    </header>
+
+    <main>
+        <div id="menukort"></div>
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script>
+        let mad = [];
+        let filter = "alle";
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            let dest = document.querySelector("#menukort");
+
+            async function getJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
+                mad = await jsonData.json();
+                visMad();
+            }
+
+            function visMad() {
+                dest.innerHTML = "";
+                mad.forEach(madret => {
+                    if (filter == "alle" || filter == madret.kategori) {
+                        let template = `<article class="madret"><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><p>${madret.kort}</p><h3>${madret.pris}kr</h3></article>`;
+
+                        dest.insertAdjacentHTML("beforeend", template);
+                        dest.lastElementChild.addEventListener("click", åbn);
+
+                        function åbn() {
+                            document.querySelector("#indhold").innerHTML = `<article><h2>${madret.navn}</h2><img src="billedeismall_/${madret.billede}-sm.jpg"><p>${madret.lang}</p><h3>${madret.pris}kr</h3></article>`;
+                            document.querySelector("#popup").style.display = "block";
+                        }
+                    }
+                })
+            } //function visMad slut
+            document.querySelector("#luk button").addEventListener("click", () => {
+                document.querySelector("#popup").style.display = "none";
+            })
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+
+            function filtrering() {
+                filter = this.getAttribute("data-kategori");
+                document.querySelector("h1").textContent = this.textContent;
+                document.querySelectorAll(".filter").forEach(elm => {
+                    elm.classList.remove("valgt");
+                })
+                this.classList.add("valgt");
+                visMad();
+            }
+
+            getJson();
+        }
+    </script>
+</body>
+
+</html>
